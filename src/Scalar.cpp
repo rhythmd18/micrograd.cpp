@@ -9,30 +9,127 @@ void Scalar::backward()
         (*iter)->_backward();
 }
 
-Scalar operator+(
-    Scalar& lhs,
-    Scalar& rhs
-    )
+Scalar Scalar::operator+(Scalar& other)
 {
-    auto out = Scalar(lhs.data + rhs.data, { &lhs, &rhs }, "+");
-    out._backward = [&lhs, &rhs, &out]()
+    auto out = Scalar(this->data + other.data, { this, &other }, "+");
+    out._backward = [this, &other, &out]()
         {
-            lhs.grad += 1.0 * out.grad;
-            rhs.grad += 1.0 * out.grad;
+            this->grad += out.grad;
+            other.grad += out.grad;
         };
     return out;
 }
 
-Scalar operator*(
-    Scalar& lhs,
-    Scalar& rhs
-    )
+Scalar Scalar::operator+(double n)
 {
-    auto out = Scalar(lhs.data * rhs.data, { &lhs, &rhs }, "*");
-    out._backward = [&lhs, &rhs, &out]()
+    auto out = Scalar(this->data + n, { this }, "+");
+    out._backward = [this, &out]()
         {
-            lhs.grad += rhs.data * out.grad;
-            rhs.grad += lhs.data * out.grad;
+            this->grad += out.grad;
+        };
+    return out;
+}
+
+Scalar operator+(double n, Scalar& other)
+{
+    auto out = Scalar(n + other.data, { &other }, "+");
+    out._backward = [&other, &out]()
+        {
+            other.grad += out.grad;
+        };
+    return out;
+}
+
+Scalar Scalar::operator-(Scalar& other)
+{
+    auto out = Scalar(this->data - other.data, { this, &other }, "-");
+    out._backward = [this, &other, &out]()
+        {
+            this->grad += out.grad;
+            other.grad -= out.grad;
+        };
+    return out;
+}
+
+Scalar Scalar::operator-(double n)
+{
+    auto out = Scalar(this->data - n, { this }, "-");
+    out._backward = [this, &out]()
+        {
+            this->grad += out.grad;
+        };
+    return out;
+}
+
+Scalar operator-(double n, Scalar& other)
+{
+    auto out = Scalar(n - other.data, { &other }, "-");
+    out._backward = [&other, &out]()
+        {
+            other.grad -= out.grad;
+        };
+    return out;
+}
+
+Scalar Scalar::operator*(Scalar& other)
+{
+    auto out = Scalar(this->data * other.data, { this, &other }, "*");
+    out._backward = [this, &other, &out]()
+        {
+            this->grad += other.data * out.grad;
+            other.grad += this->data * out.grad;
+        };
+    return out;
+}
+
+Scalar Scalar::operator*(double n)
+{
+    auto out = Scalar(this->data / n, { this }, "*");
+    out._backward = [this, n, &out]()
+        {
+            this->grad += n * out.grad;
+        };
+    return out;
+}
+
+Scalar operator*(double n, Scalar& other)
+{;
+    auto out = Scalar(n * other.data, { &other }, "*");
+    out._backward = [n, &other, &out]()
+        {
+            other.grad += n * out.grad;
+        };
+    return out;
+}
+
+Scalar Scalar::operator/(Scalar& other)
+{
+    auto out = Scalar(this->data / other.data, { this, &other }, "/");
+    out._backward = [this, &other, &out]()
+        {
+            this->grad += (1.0 / other.data) * out.grad;
+            other.grad += (-1.0 * this->data / (other.data * other.data)) * out.grad;
+        };
+    return out;
+}
+
+Scalar Scalar::operator/(double n)
+{
+    auto out = Scalar(this->data / n, { this }, "/");
+    out._backward = [this, n, &out]()
+        {
+            this->grad += (1 / n) * out.grad;
+        };
+    return out;
+}
+
+Scalar operator/(double n, Scalar& other)
+{
+    ;
+    auto out = Scalar(n * other.data, { &other }, "/");
+    out._backward = [n, &other, &out]()
+        {
+            other.grad += (-n / (other.data * other.data))*out.grad;
         };
     return out;
 }

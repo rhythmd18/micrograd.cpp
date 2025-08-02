@@ -38,8 +38,21 @@ public:
     }
 
     void backward();
+    Scalar operator+(Scalar& other);
+    Scalar operator+(double n);
+    Scalar operator-(Scalar& other);
+    Scalar operator-(double n);
+    Scalar operator*(Scalar& other);
+    Scalar operator*(double n);
+    Scalar operator/(Scalar& other);
+    Scalar operator/(double n);
     Scalar tanh();
+    /*Scalar sigmoid();
+    Scalar relu();*/
 };
 
-Scalar operator+(Scalar& lhs, Scalar& rhs);
-Scalar operator*(Scalar& lhs, Scalar& rhs);
+Scalar operator+(double n, Scalar& other);
+Scalar operator-(double n, Scalar& other);
+Scalar operator*(double n, Scalar& other);
+Scalar operator/(double n, Scalar& other);
+
