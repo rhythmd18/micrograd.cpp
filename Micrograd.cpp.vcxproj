@@ -123,11 +123,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GraphUtils.h" />
     <ClInclude Include="Scalar.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GraphUtils.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Scalar.cpp" />
   </ItemGroup>

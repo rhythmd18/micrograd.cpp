@@ -18,18 +18,12 @@
     <ClInclude Include="Scalar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scalar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
