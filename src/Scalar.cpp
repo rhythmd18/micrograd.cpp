@@ -9,23 +9,23 @@ void Scalar::backward()
         (*iter)->_backward();
 }
 
-Scalar Scalar::operator+(Scalar& other)
+Scalar Scalar::operator+(const Scalar& other) const
 {
-    auto out = Scalar(this->data + other.data, { this, &other }, "+");
+    auto out = Scalar(this->data + other.data, { const_cast<Scalar*>(this), const_cast<Scalar*>(&other) }, "+");
     out._backward = [this, &other, &out]()
         {
-            this->grad += out.grad;
-            other.grad += out.grad;
+            const_cast<Scalar*>(this)->grad += out.grad;
+            const_cast<Scalar*>(&other)->grad += out.grad;
         };
     return out;
 }
 
-Scalar Scalar::operator+(double n)
+Scalar Scalar::operator+(double n) const
 {
-    auto out = Scalar(this->data + n, { this }, "+");
+    auto out = Scalar(this->data + n, { const_cast<Scalar*>(this) }, "+");
     out._backward = [this, &out]()
         {
-            this->grad += out.grad;
+            const_cast<Scalar*>(this)->grad += out.grad;
         };
     return out;
 }
@@ -40,23 +40,23 @@ Scalar operator+(double n, Scalar& other)
     return out;
 }
 
-Scalar Scalar::operator-(Scalar& other)
+Scalar Scalar::operator-(const Scalar& other) const
 {
-    auto out = Scalar(this->data - other.data, { this, &other }, "-");
+    auto out = Scalar(this->data - other.data, { const_cast<Scalar*>(this), const_cast<Scalar*>(&other) }, "-");
     out._backward = [this, &other, &out]()
         {
-            this->grad += out.grad;
-            other.grad -= out.grad;
+            const_cast<Scalar*>(this)->grad += out.grad;
+            const_cast<Scalar*>(&other)->grad -= out.grad;
         };
     return out;
 }
 
-Scalar Scalar::operator-(double n)
+Scalar Scalar::operator-(double n) const
 {
-    auto out = Scalar(this->data - n, { this }, "-");
+    auto out = Scalar(this->data - n, { const_cast<Scalar*>(this) }, "-");
     out._backward = [this, &out]()
         {
-            this->grad += out.grad;
+            const_cast<Scalar*>(this)->grad += out.grad;
         };
     return out;
 }
@@ -71,23 +71,23 @@ Scalar operator-(double n, Scalar& other)
     return out;
 }
 
-Scalar Scalar::operator*(Scalar& other)
+Scalar Scalar::operator*(const Scalar& other) const
 {
-    auto out = Scalar(this->data * other.data, { this, &other }, "*");
+    auto out = Scalar(this->data * other.data, { const_cast<Scalar*>(this), const_cast<Scalar*>(&other) }, "*");
     out._backward = [this, &other, &out]()
         {
-            this->grad += other.data * out.grad;
-            other.grad += this->data * out.grad;
+            const_cast<Scalar*>(this)->grad += other.data * out.grad;
+            const_cast<Scalar*>(&other)->grad += this->data * out.grad;
         };
     return out;
 }
 
-Scalar Scalar::operator*(double n)
+Scalar Scalar::operator*(double n) const
 {
-    auto out = Scalar(this->data / n, { this }, "*");
+    auto out = Scalar(this->data * n, { const_cast<Scalar*>(this) }, "*");
     out._backward = [this, n, &out]()
         {
-            this->grad += n * out.grad;
+            const_cast<Scalar*>(this)->grad += n * out.grad;
         };
     return out;
 }
@@ -102,23 +102,23 @@ Scalar operator*(double n, Scalar& other)
     return out;
 }
 
-Scalar Scalar::operator/(Scalar& other)
+Scalar Scalar::operator/(const Scalar& other) const
 {
-    auto out = Scalar(this->data / other.data, { this, &other }, "/");
+    auto out = Scalar(this->data / other.data, { const_cast<Scalar*>(this), const_cast<Scalar*>(&other) }, "/");
     out._backward = [this, &other, &out]()
         {
-            this->grad += (1.0 / other.data) * out.grad;
-            other.grad += (-1.0 * this->data / (other.data * other.data)) * out.grad;
+            const_cast<Scalar*>(this)->grad += (1.0 / other.data) * out.grad;
+            const_cast<Scalar*>(&other)->grad += (-1.0 * this->data / (other.data * other.data)) * out.grad;
         };
     return out;
 }
 
-Scalar Scalar::operator/(double n)
+Scalar Scalar::operator/(double n) const
 {
-    auto out = Scalar(this->data / n, { this }, "/");
+    auto out = Scalar(this->data / n, { const_cast<Scalar*>(this) }, "/");
     out._backward = [this, n, &out]()
         {
-            this->grad += (1 / n) * out.grad;
+            const_cast<Scalar*>(this)->grad += (1 / n) * out.grad;
         };
     return out;
 }

@@ -33,19 +33,21 @@ public:
     std::string op;
     std::string label;
 
+    Scalar() : data(0.0), grad(0.0), prev(), op(""), label(""), _backward([]() {}) {}
+
     Scalar(double _data, std::vector<Scalar*> _prev = {}, std::string _op = "", std::string _label = "") :
         data(_data), grad(0.0), prev(_prev), op(_op), label(_label), _backward([](){}) {
     }
 
     void backward();
-    Scalar operator+(Scalar& other);
-    Scalar operator+(double n);
-    Scalar operator-(Scalar& other);
-    Scalar operator-(double n);
-    Scalar operator*(Scalar& other);
-    Scalar operator*(double n);
-    Scalar operator/(Scalar& other);
-    Scalar operator/(double n);
+    Scalar operator+(const Scalar& other) const;
+    Scalar operator+(double n) const;
+    Scalar operator-(const Scalar& other) const;
+    Scalar operator-(double n) const;
+    Scalar operator*(const Scalar& other) const;
+    Scalar operator*(double n) const;
+    Scalar operator/(const Scalar& other) const;
+    Scalar operator/(double n) const;
     Scalar tanh();
     /*Scalar sigmoid();
     Scalar relu();*/

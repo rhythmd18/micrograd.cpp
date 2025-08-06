@@ -2,7 +2,8 @@
 #include <vector>
 #include <set>
 #include <memory>
-#include "../headers/Scalar.h"
+//#include "../headers/Scalar.h"
+#include "../headers/Layer.h"
 
 int main()
 {
@@ -30,7 +31,7 @@ int main()
     //std::cout << "do/dw1 = " << w1.grad << std::endl;
     //std::cout << "do/dw2 = " << w2.grad << std::endl;
 
-    Scalar a(2);
+    /*Scalar a(2);
     Scalar b(3);
     Scalar c = a / b;
     Scalar o = 2 + c;
@@ -40,7 +41,14 @@ int main()
     std::cout << "do/do = " << o.grad << std::endl;
     std::cout << "do/dc = " << c.grad << std::endl;
     std::cout << "do/db = " << b.grad << std::endl;
-    std::cout << "do/da = " << a.grad << std::endl;
+    std::cout << "do/da = " << a.grad << std::endl;*/
+
+    Layer n(2, 3);
+    std::vector<double> X = { 2.0, 3.0 };
+    std::vector<Scalar> outs = n(X);
+
+    for (Scalar out : outs)
+        std::cout << out.data << std::endl;
 
     std::cin.get();
 

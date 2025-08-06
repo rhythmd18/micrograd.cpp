@@ -140,8 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="headers\Scalar.h" />
+    <ClInclude Include="headers\Neuron.h" />
+    <ClInclude Include="headers\Layer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Layer.cpp" />
+    <ClCompile Include="src\Neuron.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Scalar.cpp" />
   </ItemGroup>
