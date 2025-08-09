@@ -142,11 +142,13 @@
     <ClInclude Include="headers\Scalar.h" />
     <ClInclude Include="headers\Neuron.h" />
     <ClInclude Include="headers\Layer.h" />
+    <ClInclude Include="headers\MLP.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\MLP.cpp" />
     <ClCompile Include="src\Layer.cpp" />
     <ClCompile Include="src\Neuron.cpp" />
-    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="src\Scalar.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -5,11 +5,11 @@
 
 class Neuron
 {
-    double generate_random()
+    Scalar generate_random()
     {
         static std::mt19937 gen(std::random_device{}());
         static std::uniform_real_distribution<> dist(-1, 1);
-        return dist(gen);
+        return Scalar(dist(gen));
     }
 public:
 	std::vector<Scalar> W;

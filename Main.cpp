@@ -3,7 +3,8 @@
 #include <set>
 #include <memory>
 //#include "../headers/Scalar.h"
-#include "../headers/Layer.h"
+//#include "headers/Layer.h"
+#include "headers/MLP.h"
 
 int main()
 {
@@ -43,9 +44,9 @@ int main()
     std::cout << "do/db = " << b.grad << std::endl;
     std::cout << "do/da = " << a.grad << std::endl;*/
 
-    Layer n(2, 3);
-    std::vector<double> X = { 2.0, 3.0 };
-    std::vector<Scalar> outs = n(X);
+    MLP model(3, { 4, 4, 2 });
+    std::vector<double> X = { 2.0, 3.0, -1.0 };
+    std::vector<Scalar> outs = model(X);
 
     for (Scalar out : outs)
         std::cout << out.data << std::endl;

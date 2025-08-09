@@ -24,18 +24,24 @@
     <ClInclude Include="headers\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\MLP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Scalar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Main.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Neuron.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Layer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MLP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
