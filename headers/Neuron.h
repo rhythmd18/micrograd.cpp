@@ -31,4 +31,13 @@ public:
             sum = sum + (W[i] * X[i]);
         return sum.tanh();
     }
+
+    std::vector<Scalar*> parameters()
+    {
+        std::vector<Scalar*> params;
+        for (Scalar& w : W)
+            params.push_back(&w);
+        params.push_back(&b);
+        return params;
+    }
 };

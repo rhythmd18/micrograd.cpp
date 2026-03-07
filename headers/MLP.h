@@ -27,5 +27,16 @@ public:
 		}
 		return out;
 	}
+
+	std::vector<Scalar*> parameters()
+	{
+		std::vector<Scalar*> params;
+		for (Layer& l : layers)
+		{
+			for (Scalar*& p : l.parameters())
+				params.push_back(p);
+		}
+		return params;
+	}
 };
 

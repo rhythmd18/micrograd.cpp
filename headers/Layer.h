@@ -23,5 +23,16 @@ public:
 			outs[i] = neurons[i](X);
 		return outs;
 	}
+
+	std::vector<Scalar*> parameters()
+	{
+		std::vector<Scalar*> params;
+		for (Neuron& n : neurons)
+		{
+			for (Scalar*& p : n.parameters())
+				params.push_back(p);
+		}
+		return params;
+	}
 };
 

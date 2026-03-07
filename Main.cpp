@@ -6,52 +6,44 @@
 //#include "headers/Layer.h"
 #include "headers/MLP.h"
 
+Scalar get_loss(std::vector<double>& y_true, std::vector<Scalar>& y_pred)
+{
+    Scalar sum = Scalar(0.0);
+    int n = y_true.size();
+    for (int i = 0; i < n; i++)
+        sum = sum + (y_true[i] - y_pred[i]) * (y_true[i] - y_pred[i]);
+    return sum / n;
+}
+
 int main()
 {
-    
-    //auto x1 = Scalar(2.0, {}, "", "x1");
-    //auto x2 = Scalar(0.0, {}, "", "x2");
-    //
-    //// Weights w1, w2
-    //auto w1 = Scalar(-3.0, {}, "", "w1");
-    //auto w2 = Scalar(1.0, {}, "", "w2");
-    //
-    //// Bias b
-    //auto b = Scalar(6.8813735870195432, {}, "", "b");
+    MLP model(3, { 4, 4, 1 });
+    std::vector<std::vector<double>> X = {
+        {2.0, 3.0, -1.0},
+        {3.0, -1.0, 0.5},
+        {0.5, 1.0, 1.0},
+        {1.0, 1.0, -1.0}
+    };
+    std::vector<double> y = { 1.0, -1.0, -1.0, 1.0 };
 
-    //auto x1w1 = x1 * w1; x1w1.label = "x1*w1";
-    //auto x2w2 = x2 * w2; x2w2.label = "x2*w2";
-    //auto x1w1x2w2 = x1w1 + x2w2; x1w1x2w2.label = "x1*w1 + x2*w2";
-    //auto n = x1w1x2w2 + b; n.label = "n";
-    //auto o = n.tanh(); o.label = "o";
+    std::vector<Scalar> y_pred;
+    for (std::vector<double> x : X)
+    {
+        y_pred.push_back(model(x)[0]);
+    }
+    Scalar loss = get_loss(y, y_pred);
 
-    //auto L = o + 1;
-
-    //o.backward();
-
-    //std::cout << "do/dw1 = " << w1.grad << std::endl;
-    //std::cout << "do/dw2 = " << w2.grad << std::endl;
-
-    /*Scalar a(2);
-    Scalar b(3);
-    Scalar c = a / b;
-    Scalar o = 2 + c;
-
-    o.backward();
-
-    std::cout << "do/do = " << o.grad << std::endl;
-    std::cout << "do/dc = " << c.grad << std::endl;
-    std::cout << "do/db = " << b.grad << std::endl;
-    std::cout << "do/da = " << a.grad << std::endl;*/
-
-    MLP model(3, { 4, 4, 2 });
-    std::vector<double> X = { 2.0, 3.0, -1.0 };
-    std::vector<Scalar> outs = model(X);
-
-    for (Scalar out : outs)
+    for (Scalar out : y_pred)
         std::cout << out.data << std::endl;
 
-    std::cin.get();
+    std::cout << "Loss: " << loss.data << std::endl;
 
+    loss.backward();
+
+    std::cout << "Gradients: " << std::endl;
+    for (Scalar* p : model.parameters())
+        std::cout << p->grad << std::endl;
+
+    std::cin.get();
     return 0;
 }
